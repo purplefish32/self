@@ -1,0 +1,27 @@
+application:
+    image: debian:jessie
+    volumes:
+    - /var/www/symfony
+
+    # I dont understand this
+    tty: true 
+
+nginx:
+    image: nginx
+    links:
+        - php-fpm
+
+    # Change port if needed
+    ports:
+        - "8888:80" 
+    volumes_from:
+        - application
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro 
+      - ./logs/nginx/:/var/log/nginx
+
+php-fpm:
+    image: php:5.5-fpm
+    command: "php-fpm"
+    volumes_from:
+        - application
