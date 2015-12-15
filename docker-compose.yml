@@ -7,6 +7,8 @@ symfony:
 
     # I dont understand this
     tty: true 
+    links:
+        - db
 
 db:
     image: mysql
